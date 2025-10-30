@@ -15,13 +15,38 @@ const resolvers = {
 		authors() {
 			return db.authors;
 		},
+		review(_, { id }) {
+			return db.reviews.find((review) => review.id === id);
+		},
+		game(_, { id }) {
+			return db.games.find((game) => game.id === id);
+		},
+		author(_, { id }) {
+			return db.authors.find((author) => author.id === id);
+		},
+	},
+	Author: {
+		reviews(_, { id }) {
+			return db.reviews.filter((review) => review.id === id);
+		},
+	},
+	Mutation: {
+		createReview(_, {content, rating}) {
+			const review = {
+				id: Math.floor(Math.random() * 1000000).toString(),
+				rating,
+				content
+			};
+			db.reviews.push(review);
+			return review;
+		},
 	},
 };
 
 //Server
 const server = new ApolloServer({
 	typeDefs,
-	resolvers,
+	resolvers
 });
 
 const { url } = await startStandaloneServer(server, { listen: { port: 4000 } });

@@ -13,10 +13,17 @@ export const typeDefs = `#graphql
     id:ID!
     name: String!
     verified: Boolean!
+    reviews: [Review]!
   }
   type Query{
     reviews: [Review]
+    review(id:ID!):Review  
     games: [Game]
+    game(id:ID!):Game
     authors:[Author]
+    author(id:ID!):Author
+  }
+  type Mutation{
+    createReview(content:String!, rating:Int!):Review
   }
 `;
