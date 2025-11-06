@@ -117,4 +117,17 @@ let reviews = [
 	{ id: '10', rating: 7, content: 'Entertaining but lacks long-term depth.' },
 ];
 
-export default { games, reviews, authors };
+let publishers = [
+	{ id: '1', name: 'Nintendo' },
+	{ id: '2', name: 'FromSoftware' },
+	{ id: '3', name: 'Santa Monica Studio' },
+	{ id: '4', name: 'Supergiant Games' },
+	{ id: '5', name: 'CD Projekt Red' },
+	{ id: '6', name: 'ConcernedApe' },
+	{ id: '7', name: 'Rockstar Games' },
+	{ id: '8', name: 'Mojang Studios' },
+	{ id: '9', name: 'Larian Studios' },
+	{ id: '10', name: 'Bethesda Game Studios' },
+];
+
+export default { games, reviews, authors, publishers };

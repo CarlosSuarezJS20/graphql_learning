@@ -9,7 +9,8 @@ const resolvers = {
 		games() {
 			return db.games;
 		},
-		reviews() {
+		reviews(context) {
+			console.log(context);
 			return db.reviews;
 		},
 		authors() {
@@ -23,6 +24,12 @@ const resolvers = {
 		},
 		author(_, { id }) {
 			return db.authors.find((author) => author.id === id);
+		},
+		publishers() {
+			return db.publishers;
+		},
+		publisher(_, { id }) {
+			return db.publishers.find((publisher) => publisher.id === id);
 		},
 	},
 	Author: {
@@ -39,6 +46,19 @@ const resolvers = {
 			};
 			db.reviews.push(review);
 			return review;
+		},
+
+		createPublisher(_, {name, games}) {
+			const publisher = {
+				id: Math.floor(Math.random() * 1000000).toString(),
+				name,
+				games
+			};
+
+			console.log(publisher);
+
+			db.publishers.push(publisher);
+			return publisher;
 		},
 	},
 };
