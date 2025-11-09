@@ -9,9 +9,11 @@ const resolvers = {
 		games() {
 			return db.games;
 		},
-		reviews(context) {
-			console.log(context);
+		reviews() {
 			return db.reviews;
+		},
+		publishers() {
+			return db.publishers;
 		},
 		authors() {
 			return db.authors;
@@ -25,17 +27,27 @@ const resolvers = {
 		author(_, { id }) {
 			return db.authors.find((author) => author.id === id);
 		},
-		publishers() {
-			return db.publishers;
-		},
 		publisher(_, { id }) {
 			return db.publishers.find((publisher) => publisher.id === id);
 		},
 	},
-	Author: {
-		reviews(_, { id }) {
-			return db.reviews.filter((review) => review.id === id);
+	Game: {
+		reviews(parent) {
+			return db.reviews.filter((review) => review.gameId === parent.id);
+		}
+	},
+	Review: {
+		game(parent) {
+			return db.games.find((game) => game.id === parent.gameId);
 		},
+		author(parent) {
+			return db.authors.find((author) => author.id === parent.authorId);
+		}
+	},
+	Author: {
+		reviews(parent) {
+			return db.reviews.filter((review) => review.authorId === parent.id);
+		}
 	},
 	Mutation: {
 		createReview(_, {content, rating}) {
@@ -60,6 +72,14 @@ const resolvers = {
 			db.publishers.push(publisher);
 			return publisher;
 		},
+		deleteGame(_, { id }) {
+			const game = db.games.find((game) => game.id === id); // Finding the game
+			if (!game) {
+				throw new Error('Game not found');
+			}
+			db.games = db.games.filter((game) => game.id !== id);
+			return db.games;
+		}
 	},
 };
 

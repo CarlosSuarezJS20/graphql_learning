@@ -1,29 +1,22 @@
 export const typeDefs = `#graphql
-  interface Node {
-    id: ID!
-  }
 
-  # Author
-  
-  type Author implements Node {
-    id:ID!
+  type Author {
+    id: ID!
     name: String!
     verified: Boolean!
-    reviews: [Review]!
+    reviews: [Review!]
   }
-
-  # Game
 
   type Game{
     id: ID!
     title: String!
     platform: [String!]!
+    reviews: [Review!]
   }
 
   type Publisher {
   id: ID!
   name: String!
-  games: [String!]!
 }
 
 # user actions
@@ -32,12 +25,11 @@ export const typeDefs = `#graphql
     id: ID!
     rating: Int!
     content: String!
+    game: Game!
+    author: Author!
   }
 
-
-
   type Query{
-    node(id: ID!): Node
     reviews: [Review]
     review(id:ID!):Review  
     games: [Game]
@@ -49,10 +41,10 @@ export const typeDefs = `#graphql
   }
     
   type Mutation{
-    createReview(content:String!, rating:Int!):Review
+    createReview(content:String!, rating:Int!):Review,
+    createPublisher(name:String!, games: [String!]!):Publisher,
+    deleteGame(id:ID!):[Game!]!
   }
 
-  type Mutation{
-    createPublisher(name:String!, games: [String!]!):Publisher
-  }
+
 `;
