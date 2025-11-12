@@ -1,0 +1,19 @@
+scalar DateTime
+
+type Author implements Node {
+  id: ID!
+  name: String!
+  verified: Boolean!
+  reviews: [Review!]
+  createdAt: DateTime!
+}
+
+extend type Query {
+  authors: [Author]
+  author(id: ID!): Author
+}
+
+extend type Mutation {
+  createAuthor(name: String!, verified: Boolean): Author
+}
+

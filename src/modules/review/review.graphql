@@ -1,0 +1,17 @@
+type Review implements Node {
+  id: ID!
+  rating: Int!
+  content: String!
+  game: Game!
+  author: Author!
+}
+
+extend type Query {
+  reviews: [Review]
+  review(id: ID!): Review
+}
+
+extend type Mutation {
+  createReview(content: String!, rating: Int!): Review
+}
+

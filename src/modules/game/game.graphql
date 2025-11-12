@@ -1,0 +1,15 @@
+type Game implements Node {
+  id: ID!
+  title: String!
+  platform: [String!]!
+  reviews: [Review!]
+}
+
+extend type Query {
+  games: [Game]
+  game(id: ID!): Game
+}
+
+extend type Mutation {
+  deleteGame(id: ID!): [Game!]!
+}

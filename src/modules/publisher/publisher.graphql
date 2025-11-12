@@ -1,0 +1,14 @@
+type Publisher implements Node {
+  id: ID!
+  name: String!
+  games: [String!]!
+}
+
+extend type Query {
+  publishers: [Publisher]
+  publisher(id: ID!): Publisher
+}
+
+extend type Mutation {
+  createPublisher(name: String!, games: [String!]!): Publisher
+}
