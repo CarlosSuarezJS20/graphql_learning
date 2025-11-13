@@ -8,6 +8,10 @@ export const authorResolvers = {
 		author(_, { id }) {
 			return db.authors.find((author) => author.id === id);
 		},
+		authorSearch(_, { search }) {
+			console.log(search);
+			return db.authors.filter((author) => author.name.toLowerCase().includes(search.toLowerCase()));
+		}
 	},
 	Author: {
 		reviews(parent) {

@@ -1,9 +1,12 @@
+scalar DateTime
+
 type Review implements Node {
   id: ID!
   rating: Int!
   content: String!
   game: Game!
   author: Author!
+  createdAt: DateTime!
 }
 
 extend type Query {
@@ -11,7 +14,14 @@ extend type Query {
   review(id: ID!): Review
 }
 
+input ReviewInput {
+  content: String!
+  rating: Int!
+  gameId: ID!
+  authorId: ID!
+} 
+
 extend type Mutation {
-  createReview(content: String!, rating: Int!): Review
+  createReview(review: ReviewInput!): Review
 }
 

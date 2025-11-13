@@ -18,16 +18,15 @@ export const reviewResolvers = {
 		},
 	},
 	Mutation: {
-		createReview(_, { content, rating }) {
-			const review = {
+		createReview(_, { review }) {
+			const newReview = {
 				id: Math.floor(Math.random() * 1000000).toString(),
-				rating,
-				content,
+				...review,
+				createdAt: new Date().toISOString()
 			};
-
-			db.reviews.push(review);
-			return review;
-		},
+			db.reviews.push(newReview);
+			return newReview;
+		}
 	},
 };
 

@@ -1,7 +1,15 @@
+enum Platform {
+  PC
+  PLAYSTATION
+  XBOX
+  NINTENDO
+  MAC
+}
+
 type Game implements Node {
   id: ID!
   title: String!
-  platform: [String!]!
+  platform: Platform!
   reviews: [Review!]
 }
 

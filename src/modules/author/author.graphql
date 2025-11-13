@@ -11,6 +11,7 @@ type Author implements Node {
 extend type Query {
   authors: [Author]
   author(id: ID!): Author
+  authorSearch(search: String!): [Author]
 }
 
 extend type Mutation {
