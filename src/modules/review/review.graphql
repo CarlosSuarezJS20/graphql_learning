@@ -9,8 +9,26 @@ type Review implements Node {
   createdAt: DateTime!
 }
 
+type ReviewsConnection {
+  edges: [ReviewEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type ReviewEdge {
+  node: Review!
+  cursor: String!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
 extend type Query {
-  reviews: [Review]
+  reviews(limit: Int = 10, offset: Int = 0): ReviewsConnection
   review(id: ID!): Review
 }
 

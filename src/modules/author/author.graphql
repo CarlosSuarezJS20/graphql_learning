@@ -4,7 +4,7 @@ type Author implements Node {
   id: ID!
   name: String!
   verified: Boolean!
-  reviews: [Review!]
+  reviews: [Review]
   createdAt: DateTime!
 }
 
