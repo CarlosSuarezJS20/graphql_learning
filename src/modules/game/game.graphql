@@ -11,6 +11,8 @@ type Game implements Node {
   title: String!
   platform: Platform!
   reviews: [Review!]
+  reviewsCount: Int!
+  avgRating: Float
 }
 
 extend type Query {

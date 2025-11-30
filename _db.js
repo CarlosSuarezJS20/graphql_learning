@@ -417,21 +417,53 @@ const reviewAdditions = [
 
 const reviewSnippets = [...baseReviewSnippets, ...reviewAdditions];
 
-const reviews = Array.from({ length: 50 }, (_, index) => ({
-	id: (index + 1).toString(),
-	rating: ((index % 5) + 6),
-	content: reviewSnippets[index % reviewSnippets.length],
-	authorId: ((index % authors.length) + 1).toString(),
-	gameId: (((index * 3) % games.length) + 1).toString(),
-}));
+// Generate more reviews with better distribution across games
+const reviews = Array.from({ length: 200 }, (_, index) => {
+	// Distribute reviews across games more evenly
+	// Each game gets multiple reviews with varied ratings
+	const gameId = ((index % games.length) + 1).toString();
+	
+	// Create varied ratings (1-10) for more realistic averages
+	// Use a pattern that gives different games different rating distributions
+	const ratingPattern = (index % 10);
+	let rating;
+	if (ratingPattern < 2) {
+		rating = 9 + (index % 2); // 9-10 (high ratings)
+	} else if (ratingPattern < 5) {
+		rating = 7 + (index % 2); // 7-8 (good ratings)
+	} else if (ratingPattern < 7) {
+		rating = 5 + (index % 2); // 5-6 (average ratings)
+	} else if (ratingPattern < 9) {
+		rating = 3 + (index % 2); // 3-4 (low ratings)
+	} else {
+		rating = 1 + (index % 2); // 1-2 (very low ratings)
+	}
+	
+	return {
+		id: (index + 1).toString(),
+		rating,
+		content: reviewSnippets[index % reviewSnippets.length],
+		authorId: ((index % authors.length) + 1).toString(),
+		gameId,
+	};
+});
 
-// Ensure ratings for base snippets
-reviews.forEach((review, index) => {
-	if (index < baseReviewSnippets.length) {
-		const predefinedRatings = [
-			9, 10, 8, 7, 6, 9, 10, 8, 9, 7, 8, 9, 9, 10, 8, 10,
-		];
-		review.rating = predefinedRatings[index];
+// Ensure some popular games have more reviews with varied ratings
+// Add extra reviews for first 10 games to ensure they have good averages
+const popularGames = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+popularGames.forEach((gameNum, gameIndex) => {
+	// Add 5-10 additional reviews per popular game
+	const extraReviews = 5 + (gameIndex % 6);
+	for (let i = 0; i < extraReviews; i++) {
+		const reviewIndex = reviews.length;
+		const rating = 6 + (i % 5); // Ratings between 6-10
+		reviews.push({
+			id: (reviewIndex + 1).toString(),
+			rating,
+			content: reviewSnippets[(reviewIndex + i) % reviewSnippets.length],
+			authorId: ((reviewIndex + i) % authors.length + 1).toString(),
+			gameId: gameNum.toString(),
+		});
 	}
 });
 
